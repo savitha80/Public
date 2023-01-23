@@ -1,1 +1,960 @@
-Hello
+<jira_id>
+
+///7k 20g specific 20g
+<PAN-191867>
+    <category>Reboot</category>
+    <Bug_signature>
+Bug signature of PAN-191867:
+{
+     
+	Failure Pattern:
+	Sudden restart/reboot of the NPC line card then check the NPC card console logs for RCU stall messages.
+
+    check the /var/log/pan/slot8-console-output.log file in the TSF for below signature or logs
+
+	Signature:
+	{
+		Thu Apr 7 13:33:43 2022: INFO: rcu_sched detected stalls on CPUs/tasks: 
+		                         { 1} (detected by 0, t=14712 jiffies, g=2166978, c=2166977, q=1597)
+		Thu Apr 7 13:33:43 2022: Call Trace:
+		Thu Apr 7 13:33:43 2022: [ffffffff805dbfcc] __schedule+0x33c/0x570
+		Thu Apr 7 13:34:18 2022: Warning: chips select 0 property cavium,t-wait, clocks 501, clock time 1000, 
+		                         period 2000, mult: 1 exceeds maximum value 63, truncating.
+	}
+	
+	check the /opt/var/s1/cp/log/pan/brdagent.log file in the TSF for below signature or logs
+	
+	signature:
+	{
+		2022-03-30 21:02:51.778 -0500 Error: condor_20g_pss_queue_get(7000/20gq_cp/condor_20g_sysd.c:204): 
+		                                     condor_20g_pss_queue_get: Could not determine queue
+		2022-03-30 21:03:39.185 -0500 Error: condor_20g_pss_queue_get(7000/20gq_cp/condor_20g_sysd.c:204): 
+		                                     condor_20g_pss_queue_get: Could not determine queue     
+        }
+}
+    </Bug_signature>
+    <affect_version>10.0.9</affect_version>
+	<release_version>10.2.2, 10.1.7</release_version>
+</PAN-191867>
+
+<PAN-180801>
+    <category>None</category>
+	<Bug_signature>
+Bug Signature of PAN-180801
+{
+	Failure Pattern:
+	There is rcu_sched detecting stall on CPUs/tasks in Slot console logs.
+	
+    Check the  /var/log/pan/Slot3-console-output.log file in the TSF for below signature or logs 
+	
+	signature:
+	{
+		Mon Oct 4 16:03:08 2021: INFO: rcu_sched detected stalls on CPUs/tasks: 
+		                               { 1} (detected by 0, t=2102 jiffies, g=4310321, c=4310320, q=3087)
+		Mon Oct 4 16:03:08 2021: Call Trace:
+		Mon Oct 4 16:03:08 2021: [ffffffff805dbc8c] __schedule+0x33c/0x570
+	}
+}
+    </Bug_signature>
+    <affect_version>10.0.7</affect_version>
+	<release_version>9.1.13, 10.0.9, 10.1.5, 10.2.1</release_version>
+</PAN-180801>
+
+<PAN-170952>
+    <category>Path Monitor Failiure</category>  
+    <Bug_signature>
+Bug Signature of PAN-170952:
+{
+	Failure Pattern:
+	Last lines of path monitor failure log terminated at TIMEOUT on DP0 (poll-1)
+	
+	Check the /var/log/pan/path_monitor_hb_fail_s2.log file in the TSF for below signature or logs
+	
+	signature:
+	{
+		2021-05-04 15:17:56 p1 session --------Bash commands on dp0--------
+		2021-05-04 15:17:56 p1 session TIMEOUT
+	}
+}
+    </Bug_signature>
+    <affect_version>9.0.10</affect_version>
+    <release_version>9.1.13</release_version>
+</PAN-170952>
+
+///220 specific     
+<PAN-173877>
+    <category>Error Messages</category>
+    <Bug_signature>
+Bug signature of PAN-173877
+{
+    Failure Pattern:
+    Masterd log has exception traceback for snmp
+
+    check the /var/log/pan/masterd_detail.log file in the TSF for below signature or logs
+
+    Signature:
+	{
+          2022-09-02 05:30:32.018 +0200 DEBUG: snmpd: Execution failure in HB function: ,
+	  Error: (1, 'Traceback Error', 'Traceback (most recent call last):\n 
+	  File "/opt/dpfs/usr/lib/python2.7/site-packages/pansys/pansys.py", line 273, 
+	  in run_command\n output = cmd()\n File "/etc/masterd.d//snmpd.py", line 49, 
+	  in snmpd_logcheck\n of.truncate()\nIOError: File not open for writing\n', 0)
+	}
+}
+ 	</Bug_signature>
+    <affect_version>10.1.0</affect_version>
+    <release_version>10.2.0</release_version>
+</PAN-173877>
+
+<PAN-193132>
+    <category>High cpu/Resource</category>
+    <Bug_signature>
+Bug signature of PAN-193132 :
+{
+	Failure Pattern:
+		#when a commit is performed from to PA-220's in the network all the IPSEC, SD_WAN, LACP and OSPF adjacency goes down
+		#DP CPU is observed to be high after the commit and DP traffic is affected
+		#HA1 link flaps observed
+
+		Check the  /tmp/cli/logs/show_log_system.txt file in the TSF for below signature or logs 
+		Signature:
+		{
+		2022/03/02 01:45:52 high ha connect 0 HA Group 1: HA1-Backup connection down
+		2022/03/02 01:48:13 high ha connect 0 HA Group 1: HA1-Backup connection down
+		2022/03/02 01:50:41 high ha connect 0 HA Group 1: HA1-Backup connection down
+		}
+
+}
+    </Bug_signature>
+    <affect_version>10.1.2</affect_version>
+    <release_version>9.1.15, 10.2.3, 10.1.7, 10.0.12</release_version>
+</PAN-193132>
+     
+<PAN-193452>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+Bug Signature of PAN-193452 :
+{
+    Failure Pattern:
+    Root partition getting filled faster with 10.2 images. Check the system log for disk usage error messages
+    Check the /tmp/cli/logs/show_log_system.txt file in the TSF for below signature or logs 
+    Signature:
+    {
+        2022/06/14 06:04:36 critical general general 0 Disk usage for / exceeds limit, 95 percent in use, cleaning filesystem
+        2022/06/19 00:30:19 critical general general 0 Disk usage for / exceeds limit, 95 percent in use, cleaning filesystem
+    }
+}     
+    </Bug_signature>
+    <affect_version>10.2.1</affect_version>
+    <release_version>10.2.3, 10.1.9</release_version>
+</PAN-193452>
+     
+///7k smc and 5200 specific
+<PAN-172490>
+   <category>None</category>
+   <Bug_signature>
+Bug Signature of PAN-172490 :
+{
+    Failiure Pattern:
+	Below flap messages seen in FPP brdagent logs
+	
+	check the  /opt/var/s4/fpp/log/pan/brdagent.log [SMC card FPP Brdagent] file for below signature or logs
+	
+	signature:
+{
+2022-05-09 21:57:14.463 Petra port 10 link changed - Link Down phy:1 lane:2 petra rx_err:0/0 flap_cnt:6 action:0 marv: 82 b7e1
+2022-05-09 21:57:14.463 Petra port flap, marv regs: 82 8403 6 93e1 6 8003 66
+2022-05-09 21:57:18.873 Petra port 10 link changed - Link Up phy:1 lane:2 petra rx_err:0/0 flap_cnt:0 action:1 marv: 82 b7e1
+2022-05-09 21:57:18.873 Petra port flap, marv regs: 82 8403 6 93e1 6 8003 66
+2022-05-09 21:57:18.883 condor_petra_monitor_fap:555 xfi reset:0 sfi reset:1
+}
+}
+</Bug_signature>
+<affect_version>8.1.19</affect_version>
+<release_version>9.0.15, 9.1.11, 10.0.8</release_version>
+</PAN-172490>
+	
+<PAN-135354>
+    <category>Reboot</category>
+    <Bug_signature>
+Bug Signature of PAN-135354 :
+{
+    Failure Pattern:
+        The CP detected missing hellos from one of the dataplanes (DPs).
+        The Missing hello count would typically increment all the way up to around 188.
+
+	Check the /opt/var/s1/dp1/log/pan/masterd_apps.log file in the TSF for below signature or logs 
+
+	Signature:
+	{
+	2020-01-03 01:48:00.473 -0800 s1.dp1: Missed 187 hellos
+        2020-01-03 01:48:05.483 -0800 s1.dp1: Missed 188 hellos
+	}
+
+}
+    </Bug_signature>
+    <affect_version>9.0.4</affect_version>
+    <release_version>8.1.17, 9.0.10, 9.1.5, 10.0.0</release_version>
+</PAN-135354>
+
+///52k specific
+<PAN-168181>
+    <category>Error Messages</category>
+    <Bug_signature>
+Bug Signature of PAN-168181 :
+{
+    Failure Pattern:
+	Silent traffic drops observed on PA-5200
+
+	Check the /var/log/pan/controlplane-console-output.log file in the TSF for below signature or logs 
+
+	Signature:
+	{
+		Sun Feb 28 22:50:36 2021: nac0: Memory channels init incomplete
+	}
+	
+	Check the /opt/var.dp0/log/pan/brdagent.log file in the TSF for below signature or logs 
+
+	Signature:
+	{
+		2021-04-10 07:43:28.678 +0800 Error: check_ilk_fault(5200/dp/dp_oct.c:409): ILK link 7 not active, enabling again
+                2021-04-09 03:00:22.670 +0800 Resetting CE40 (link 0)
+	}
+
+}
+    </Bug_signature>
+    <affect_version>9.1.6</affect_version>
+    <release_version>10.2.0,11.0.0</release_version>
+</PAN-168181>
+
+<PAN-194068>
+    <category>Reboot</category>
+    <Bug_signature>
+Bug Signature of PAN-194068 :
+{
+		Failure Pattern:
+		PA-5200 failed with heartbeat failed previously .
+		MP locks up and CPLD attempts to recover system from locked state after 11 minutes by reboot.
+		After reboot, Check the /var/log/messages file in the TSF for below signature or logs
+		Signature:
+		{
+		    ****Heartbeat failed previously
+		}
+}
+	</Bug_signature>
+	<affect_version>10.1.4-h4</affect_version>
+	<release_version> 10.2.4, 10.1.9, 11.0.1</release_version>
+</PAN-194068>
+
+<PAN-184068>
+    <category>Traffic</category>
+    <Bug_signature>
+Bug Signature of PAN-184068 :
+{
+    Failure Pattern:
+           Pause frames are generated by FW, which is causing extreme slowness in customer's environment.
+	   
+	   Check the /tmp/cli/logs/sdb.txt file in the TSF for below signature or logs
+	   
+	   Signature:
+	   snmpDot3OutPauseFrames getting increased with traffic
+	   {
+	      hw.s1.cp.bcm.p11.counters:{
+                                        'reset': False,
+                                        'snmpDot1dTpPortOutFrames': 0x3dfe8ea12d,
+                                        'snmpDot3OutPauseFrames': 0x4479d331, 
+                                        'snmpEtherStatsBroadcastPkts': 0x411a6,
+                                        'snmpEtherStatsTXNoErrors': 0x3dba14cdfb,
+                                        'snmpIfOutUcastPkts': 0x3dba0ec45e,
+                                        'update': False
+                                        }
+	   
+	   }
+	  
+           Check the cli output:
+			bgiadminet@SZGB02OPFWPA05(active)> show interface ethernet1/13 | match Pause
+			snmpDot3OutPauseFrames 1787452592
+}
+    </Bug_signature>
+	<affect_version>9.1.11</affect_version>
+	<release_version>9.1.14, 10.2.3, 10.1.7</release_version>
+</PAN-184068>
+     
+<PAN-159694>                 
+    <category>Link Issue</category>
+    <Bug_signature>
+Bug Signature of PAN-159694 :
+{
+    Failure Pattern:
+	HA2 link (HSCI port) flaps with log "Remote fault detected" after the device restarted, while using QSFP+ FCBN410QB1C10.
+
+	Check the /opt/var.cp/log/pan/brdagent.log file in the TSF for below signature or logs 
+
+	Signature:
+	{
+		2020-11-23 18:51:26.949 -0500 Error:  gryphon_bcm88375_queue_get(5200/gryphon_sysd.c:571): 
+		                                      gryphon_bcm88375_queue_get: Queue 0 invalid
+		2020-11-30 14:38:55.318 -0500 Error:  gryphon_is_port_linked(5200/gryphon_ports.c:333):
+                                       	      Remote fault detected on port 25!
+		2020-11-30 14:38:55.318 -0500 Port 25: Down 40Gb/s-full duplex
+		2020-11-30 14:38:55.318 -0500 PORT25: board_port_autoneg_enabled -> board_port_autoneg, link: 0, mode: 1
+		2020-11-30 14:38:55.326 -0500 Remote fault deasserted on port 25!
+		2020-11-30 14:38:55.328 -0500 PORT25: board_port_autoneg -> board_port_autoneg_linked, link: 1, mode: 1
+		2020-11-30 14:38:55.328 -0500 Port 25: Up   40Gb/s-full duplex
+		2020-11-30 14:38:55.329 -0500 Port 25: MAC enabled
+	}
+}
+    </Bug_signature>
+    <affect_version>9.0.9</affect_version>
+    <release_version>10.1.9</release_version>
+</PAN-159694>
+
+<PAN-179258>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+	Bug Signature of PAN-179258 :
+{
+    Failure Pattern:
+	During the raid migration following error observed on below file
+
+	Check the /var/log/messages file in the TSF for below signature or logs and for kernel panic 
+
+	Signature:
+	{
+		2021-09-14 07:27:20 Message mgmt klogd: ata2: exception
+		2021-09-14 07:27:20 Message mgmt klogd: ata2: hard resetting link
+		2021-09-14 07:27:20 Message mgmt klogd: ata2: SError: { CommWake DevExch }
+	}
+}
+	</Bug_signature>
+	<affect_version>9.1.5</affect_version>
+	<release_version>10.2.3, 10.1.9</release_version>
+</PAN-179258>
+
+///7k smc specific    
+<PAN-136073>
+    <category>Link Issue</category>
+    <Bug_signature>
+Bug Signature of PAN-136073
+{
+    Failure Pattern:
+	Hsci ha2 link flapping after upgrade.
+	
+	check the /opt/var/s4/fpp/log/pan/brdagent.log [SMC card FPP Brdagent] in the TSF for below signature or logs
+	
+	Signature:
+	{
+		2022-05-09 21:57:14.463 -0400 Petra port 10 link changed - Link Down phy:1 lane:2 
+		                              petra rx_err:0/0 flap_cnt:6 action:0 marv: 82 b7e1
+		2022-05-09 21:57:14.463 -0400 Petra port flap, marv regs: 82 8403 6 93e1 6 8003 66
+		2022-05-09 21:57:18.873 -0400 Petra port 10 link changed - Link Up phy:1 lane:2 
+		                              petra rx_err:0/0 flap_cnt:0 action:1 marv: 82 b7e1
+		2022-05-09 21:57:18.873 -0400 Petra port flap, marv regs: 82 8403 6 93e1 6 8003 66
+		2022-05-09 21:57:18.883 -0400 condor_petra_monitor_fap:555 xfi reset:0 sfi reset:1
+	}
+}
+    </Bug_signature>
+    <affect_version>8.1.10</affect_version>
+    <release_version>8.1.19, 9.0.13, 9.1.8, 10.0.0</release_version>
+</PAN-136073>
+<PAN-176341>
+    <category>Link Issue</category>
+    <Bug_signature>
+Bug Signature of PAN-176341:
+{
+    Failure Pattern:
+    When one AE member goes down causes HA failover and HA path-monitor failure.
+    Link down message on brdagent.log and HA path monitor down on the Ha-agent.log
+
+    check the /opt/var/s1/cp/log/pan/brdagent.log file in the TSF for below signature or logs
+
+    Signature:
+    {
+		s1cp brdagent.log 2021-08-09 13:13:41 2021-08-09 13:13:41.763 -0500 Port 25: Tx credit counter=0x14
+		s1cp brdagent.log 2021-08-09 13:13:41 2021-08-09 13:13:41.763 -0500 Port 25: Down 40Gb/s-full duplex
+		s1cp brdagent.log 2021-08-09 13:13:41 2021-08-09 13:13:41.764 -0500 PORT25: 
+		                                      board_port_autoneg_enabled -> board_port_autoneg, link: 0, mode: 1
+    }
+    
+    check the /var/log/pan/ha_agent.log file in the TSF for below signature or logs
+	
+    Signature:
+    {	
+2021-08-09 13:13:41.999 debug: ha_state_pathmon_update(/ha_multigroup_pathmon.c:723): Group 10: Virtual router 'TEF_LTE' 
+                        destination group 'Inside' destination ip '10.33.185.249' state is going from down to up
+2021-08-09 13:13:41.999 HA Group 10: Virtual router 'TEF_LTE' destination group 'Inside' destination IP '10.33.185.249' is up
+2021-08-09 13:14:48.189 debug: ha_state_pathmon_update(/ha_multigroup_pathmon.c:723): Group 10: Virtual router 'TEF_LTE'
+                        destination group 'Inside' destination ip '10.33.185.249' state is going from up to down
+2021-08-09 13:14:48.189 Warning: ha_event_log(src/ha_event.c:59): HA Group 10: Virtual router 'TEF_LTE' 
+                        destination group 'Inside' destination IP '10.33.185.249' is down		
+    }
+}
+    </Bug_signature>
+    <affect_version>10.0.7</affect_version>
+    <release_version>10.0.9, 10.1.4, 9.1.15</release_version>
+</PAN-176341>
+
+///7k smc and 3200 specific
+<PAN-205729>
+    <category>Reboot</category>
+	<Bug_signature>
+Bug Signature of PAN-205729
+{
+    Failure Pattern:
+	MP locks up and CPLD attempts to recover system from locked state after 11 minutes by reboot.
+	After reboot, check in /var/log/messages file for below signature or logs
+	
+	Signature:
+	{
+		****Heartbeat failed previously
+	}
+	Note: Also in some case, there is missing of logging in MP for more than 12 minutes indicate that MP locks up
+}
+	</Bug_signature>
+	<affect_version>10.1.8</affect_version>
+	<release_version>10.2.4, 10.1.9, 11.0.1</release_version>
+</PAN-205729>
+
+///7k smc,5200,3200
+<PAN-142621>
+    <category>Reboot</category>
+	<Bug_signature>
+Bug Signature of PAN-142621 :
+{
+    Failure Pattern:
+	Silent reboot of the device and below stack trace is present in /var/log/messages during reboot.
+
+	Check the /var/log/messages file in the TSF for below signature or logs 
+
+
+	Signature:
+	{
+		Mar 18 01:50:10 5200 kernel: [ffffffff8149ffae] __schedule+0xd8/0x75e
+		Mar 18 01:50:10 5200 kernel: [ffffffff81218d64] ? vsnprintf+0x3dd/0x419
+		Mar 18 01:50:10 5200 kernel: [ffffffff814a0698] schedule+0x64/0x66
+		Mar 18 01:50:10 5200 kernel: [ffffffff8149ee2c] schedule_timeout+0x130/0x183
+		Mar 18 01:50:10 5200 kernel: [ffffffff81049154] ? ftrace_raw_output_itimer_expire+0x4e/0x4e
+		Mar 18 01:50:10 5200 kernel: [ffffffff812197a2] ? delay_tsc+0x2f/0x5a
+		Mar 18 01:50:10 5200 kernel: [ffffffff8149eece] schedule_timeout_uninterruptible+0x19/0x1b
+		Mar 18 01:50:10 5200 kernel: [ffffffff81049a28] msleep+0x19/0x1d
+		Mar 18 01:50:10 5200 kernel: [ffffffff813914be] i801_wait_intr.isra.8+0x19/0x4d
+		Mar 18 01:50:10 5200 kernel: [ffffffff8139170e] i801_transaction+0xe0/0xf5
+		Mar 18 01:50:10 5200 kernel: [ffffffff8121972a] ? __const_udelay+0x24/0x26
+		Mar 18 01:50:10 5200 kernel: [ffffffff812bd547] ? wait_for_xmitr+0x20/0x88
+		Mar 18 01:50:10 5200 kernel: [ffffffff81391e11] i801_access+0x6ee/0x89f
+		Mar 18 01:50:10 5200 kernel: [ffffffff8105cff8] ? up+0x34/0x3c
+		Mar 18 01:50:10 5200 kernel: [ffffffff8103e85f] ? wake_up_klogd+0x2f/0x32
+		Mar 18 01:50:10 5200 kernel: [ffffffff8138e75d] i2c_smbus_xfer+0xba/0x10c
+		Mar 18 01:50:10 5200 kernel: [ffffffff8138e9fa] i2c_smbus_write_word_data+0x32/0x34
+		Mar 18 01:50:10 5200 kernel: [ffffffff81493e25] ? printk+0x4f/0x51
+		Mar 18 01:50:10 5200 kernel: [ffffffffa012117e] write_crash_osprey+0x39/0xad [crash_save]
+		Mar 18 01:50:10 5200 kernel: [ffffffffa01210b5] crash_save_write_buf+0xb5/0xdd [crash_save]
+		Mar 18 01:50:10 5200 kernel: [ffffffff81219704] ? __delay+0xa/0xc
+		Mar 18 01:50:10 5200 kernel: [ffffffff8121972a] ? __const_udelay+0x24/0x26
+		Mar 18 01:50:10 5200 kernel: [ffffffff812bd547] ? wait_for_xmitr+0x20/0x88
+		Mar 18 01:50:10 5200 kernel: [ffffffff812197a2] ? delay_tsc+0x2f/0x5a
+		Mar 18 01:50:10 5200 kernel: [ffffffff81219704] ? __delay+0xa/0xc
+		Mar 18 01:50:11 5200 kernel: [ffffffff8121972a] ? __const_udelay+0x24/0x26
+		Mar 18 01:50:11 5200 kernel: [ffffffff812bd547] ? wait_for_xmitr+0x20/0x88
+		Mar 18 01:50:11 5200 kernel: [ffffffff8105cff8] ? up+0x34/0x3c
+		Mar 18 01:50:11 5200 kernel: [ffffffff8103e85f] ? wake_up_klogd+0x2f/0x32
+		Mar 18 01:50:11 5200 kernel: [ffffffff8103eb3c] ? console_unlock+0x2da/0x2f7
+		Mar 18 01:50:11 5200 kernel: [ffffffff8103eb3c] ? console_unlock+0x2da/0x2f7
+		Mar 18 01:50:11 5200 kernel: [ffffffff81493e25] ? printk+0x4f/0x51
+		Mar 18 01:50:11 5200 kernel: [ffffffffa01215c7] crash_save_panic_event+0x6e/0x71 [crash_save]
+		Mar 18 01:50:11 5200 kernel: [ffffffff81493c80] panic+0xd4/0x1f9
+		Mar 18 01:50:11 5200 kernel: [ffffffff814a2580] oops_end+0xb0/0xbf
+		Mar 18 01:50:11 5200 kernel: [ffffffff81011c19] die+0x55/0x60
+		Mar 18 01:50:11 5200 kernel: [ffffffff8100fdd7] do_double_fault+0xcf/0xd1
+		Mar 18 01:50:11 5200 kernel: [ffffffff814a9148] double_fault+0x28/0x30
+		Mar 18 01:50:11 5200 kernel: [ffffffff8100e5cd] ? __switch_to+0x1e0/0x3ea
+	}
+
+}
+	</Bug_signature>
+	<affect_version>8.1.9, 9.0.6</affect_version>
+	<release_version>9.0.14, 9.1.9, 10.0.6</release_version>
+</PAN-142621>
+
+///7k lfc
+<PAN-177941>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+Bug Signature of PAN-177941
+{
+	Failure Pattern:
+	High root partition usage.The bcm.log and brdagent_stdout.log file size more than 10MB
+   (Log file size reaches more than 1 GB).
+	Log file size incrementing without getting rotated.
+	
+	check the /opt/var/s*npc slot no*/cp/log/pan in the TSF for below signature or logs
+	
+	Signature:
+	{
+		[root@FW1 ~]# cd /opt/var/s8/cp/log/pan
+		[root@FW1 pan]# ls -l
+		total 27551888
+		-rw-r--r-- 1 root root 4757935032 Sep 7 09:53 bcm.log
+		-rw-r--r-- 1 root root 4669681664 Sep 7 09:16 bcm.log.1
+		-rw-r--r-- 1 root root 4655132672 Sep 7 08:18 bcm.log.2
+		-rw-r--r-- 1 root root 4836985444 Sep 7 09:53 brdagent_stdout.log-20210826
+		-rw-r--r-- 1 root root 1002086 Sep 6 18:04 brdagent_stdout.log_backup.tgz
+	}
+}
+	</Bug_signature>
+	<affect_version>10.1.2</affect_version>
+	<release_version>10.0.8, 10.1.3</release_version>
+</PAN-177941>	
+
+///7k 100G
+<PAN-185683>
+    <category>Link Issue</category>
+	<Bug_signature>
+Bug Signature of PAN-185683
+{
+	Failure Pattern:
+	The 100G/40G breakout ports not coming up after the slot restart.
+	Following tuning error observed for the 100G/40G port
+	
+	check the /opt/var/s3/cp/log/pan/brdagent.log in the TSF for below signature or logs
+	
+	Signature:
+	{
+		2022-01-06 04:05:00.937 -0800 Port 10: SFP Plus Fiber detected
+		2022-01-06 04:05:00.937 -0800 PORT10: board_port_sfp_nopop_0 -> board_port_startup, link: 0, mode: 1
+		2022-01-06 04:05:00.938 -0800 PORT10: board_port_startup -> board_port_autoneg, link: 0, mode: 1
+		2022-01-06 04:05:01.285 -0800 Error: (mdx250/src/pan_cpssutil.c:890): cpssDxChPortSerdesAutoTune:
+                              		  RX training failed (rc 18) for pport 26
+		2022-01-06 04:05:01.285 -0800 Warning: (7000b/100g_cp/condor_100g_ports.c:2065): 
+		                              Rx training pan_cpss_serdes_autotune() failed wit rc: 18 for port: 26
+	}
+}
+	</Bug_signature>
+	<affect_version>10.0.9, 10.1.4</affect_version>
+	<release_version>10.0.9, 10.2.1, 10.1.7</release_version>
+</PAN-185683>
+
+///800 specific
+<PAN-181098>
+    <category>None</category>
+	<Bug_signature>
+Bug Signature of PAN-181098 :
+{
+	Failure Pattern:
+	1. Unexpected reboot of the device.
+	2. Kernel Panic occurs with keywords "generic_file_buffered_write" and "iov_iter_advance".
+
+	Check the "var/cores/crashinfo/kernel_panic_0" or "/var/log/messages" file in the TSF for below signature or logs 
+
+	Signature:Kernel panic with backtrace
+	{
+		Kernel bug detected[#1]:
+		CPU: 0 PID: 20952 Comm: swm Not tainted 3.10.87-oct2-mp #4
+		task: 80000000f71063b8 ti: 8000000398324000 task.ti: 8000000398324000
+		$ 0 : 0000000000000000 0000000014009ce1 0000000000001000 0000000000000001
+		$ 4 : 8000000398327b80 000000000002b680 0000000000000000 0000000000000000
+		$ 8 : ffffffff80834080 8000000398324000 80000000f9438b80 80000003fc0454c8
+		$12 : 0000000000000000 0000000000000002 0000000000000210 0000000000000001
+		$16 : 0000000000001000 80000003f75ffb38 000000000002b680 0000000000001000
+		$20 : 0000000000001000 0000000000000000 0000000000000000 000000000002b680
+		$24 : 0000000000000018 000000fff3486f20
+		$28 : 8000000398324000 8000000398327b80 ffffffff8062a070 ffffffff80206148
+		Hi : 000000000000000b
+		Lo : 0000000000000043
+		epc : ffffffff80205b40 iov_iter_advance+0x8/0xc0
+			Not tainted
+		ra : ffffffff80206148 generic_file_buffered_write+0x108/0x270
+		Status: 14009ce3 KX SX UX KERNEL EXL IE
+		Cause : 00800034
+		PrId : 000d9703 (Cavium Octeon III)
+		Modules linked in: octeon_pow_ethernet zram lzo_compress lzo_decompress nf_conntrack_tftp pan_mdio 
+		                   port_link nf_conntrack_ftp nf_conntrack
+		Process swm (pid: 20952, threadinfo=8000000398324000, task=80000000f71063b8, tls=000000fff3d06070)
+		Stack : 8000000398327d88 0000000000000001 0000000000000000 0000000000001000
+				  000000ffebec6600 80000000f1cfece0 80000003f7cd2d80 0000000000000000
+				  0000000000000000 0000000000001000 8000000398327d18 ffffffff80272970
+				  0000000000000000 0000000000001000 0000000000001000 80000003f7cd2d80
+				  80000003f75ffb38 8000000398327ce0 8000000398327d88 8000000398327d18
+				  80000003f75ffa08 ffffffff80207da0 0000000000001000 0000000000000001
+				  0000000000000001 800000040bc61c58 8000000398327ce0 80000003f75ffa98
+				  0000000000001000 80000003f7cd2d80 8000000398327e00 0000000000000002
+				  0000000000000000 0000000000000001 0000000000001000 ffffffff80207f80
+				  8000000398327d88 0000000000000001 0000000000000001 0000000000001000
+				  ...
+		Call Trace:
+		[ffffffff80205b40] iov_iter_advance+0x8/0xc0
+		[ffffffff80206148] generic_file_buffered_write+0x108/0x270
+		[ffffffff80207da0] __generic_file_aio_write+0x1a8/0x328
+		[ffffffff80207f80] generic_file_aio_write+0x60/0xc0
+		[ffffffff80257760] do_sync_write+0x78/0xd8
+		[ffffffff80258518] vfs_write+0xb8/0x1e8
+		[ffffffff80258bb4] SyS_pwrite64+0x94/0xb0
+		[ffffffff801746e4] handle_sys64+0x44/0x68
+
+
+		Code: 0000102d dc820018 0045182b 00030336 dc830008 24060001 14660007 00000000 dc830010
+		---[ end trace 8ced2e20eeaf8260 ]---
+		Kernel panic - not syncing: Fatal exception
+		Rebooting in 5 seconds..
+
+	}
+}
+	</Bug_signature>
+	<affect_version>10.2.0</affect_version>
+	<release_version>10.2.0, 10.1.6, 9.1.15</release_version>
+</PAN-181098>
+
+<PAN-181759>
+    <category>Reboot</category>
+	<Bug_signature>
+Bug Signature of PAN-181759:
+{
+Failure Pattern:
+Multiple processes crash after PAN-OS upgrade to 9.0.14 when running in HA config mode with Jumbo mode enabled
+
+    check if the cfg.jumbo-mode is set to True on the /tmp/cli/logs/sdb.txt file in the TSF
+    {
+	  cfg.jumbo-mode:True
+	}
+	
+	Check the /var/log/pan/mp-monitor.log file in the TSF for below signature or logs 
+	
+	Signature:
+	{
+		Identify ip config for HA agents in /var/log/pan/mp-monitor.log, under "netstat_detail" output:
+		{
+			2021-11-02 23:27:19.928 +0100 --- netstat
+			2021-11-02 23:27:19.928 netstat raw 2304 0 172.16.158.72:1 172.16.158.73:* 1 4652/ha_agent
+			2021-11-02 23:27:19.928 netstat raw 896 0 192.0.2.1:1 192.0.2.2:* 1 4652/ha_agent ==> Ip for HA agents
+		}
+
+		From above output, we could find 192.0.2.1 is the ip for HA agent.
+		In /var/log/pan/mp-monitor.log, under "netstat_detail" output, Please check if Send-Q continue to increases 
+		heavily for the ip of HA agent netstat_detail
+		
+		netstat_detail Active Internet connections (servers and established)
+		{
+			Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name
+			tcp6 0 109968 192.0.2.1:28260 192.0.2.2:48673 ESTABLISHED 3026/sysd ==> High send-Q value
+		}
+	}
+
+}
+	</Bug_signature>
+	<affect_version>9.0.14</affect_version>
+	<release_version>10.2.3, 8.1.24, 8.1.25, 10.1.8</release_version>
+</PAN-181759>
+
+<PAN-193763>
+    <category>Reboot</category>
+	<Bug_signature>
+Bug signature of PAN-193763 :
+{
+	Failure Pattern:
+        	#The dataplane keeps on rebooting after the upgrade/startup and kernel panic occurs.
+		#when a commit is performed from to PA-820/PA-850's in the network all the IPSEC, SD_WAN, LACP and OSPF 
+		 adjacency goes down
+		#DP CPU is observed to be high after the commit and DP traffic is affected
+		#HA1 link flaps observed
+
+		Check the  /tmp/cli/logs/show_log_system.txt file in the TSF for below signature or logs 
+		Signature:
+		{
+			2022/06/14 17:26:15 info general general 0 Autocommit job succeeded
+			2022/06/14 17:26:16 critical general general 0 all_task_1: Exited 4 times, must be manually recovered.
+			2022/06/14 17:26:16 critical general general 0 pktlog_forwarding: Exited 4 times, must be manually recovered.
+			2022/06/14 17:26:18 critical general general 0 tasks: Exited 1 times, must be manually recovered.
+			2022/06/14 17:26:49 critical general general 0 supervisor: Exited 1 times, must be manually recovered.
+			2022/06/14 17:26:50 critical ha datapla 0 HA Group 1: Dataplane is down: dataplane exit failure
+			2022/06/14 17:26:50 high ha state-c 0 HA Group 1: Moved from state Tentative to state Non-Functional
+			2022/06/14 17:26:50 info routing routed- 0 FIB HA sync started when local device becomes master.
+			2022/06/14 17:26:50 critical ha ha2-lin 0 HA2 link down
+			2022/06/14 17:26:50 high ha ha2-lin 0 HA2-Backup link down
+			2022/06/14 17:26:50 critical ha ha2-lin 0 All HA2 links down
+			2022/06/14 17:26:50 critical ha ha3-lin 0 HA3 link down
+			2022/06/14 17:26:50 critical general general 0 The dataplane is restarting.
+			2022/06/14 17:26:53 high ha ha1-lin 0 HA1-Backup link down
+			2022/06/14 17:26:55 critical general general 0 data_plane: restarts exhausted, rebooting system
+		}
+
+}		
+	</Bug_signature>
+	<affect_version>10.2.0, 10.2.1</affect_version>
+	<release_version>10.2.3, 10.1.7, 9.1.16</release_version>
+</PAN-193763>
+
+///400 specific
+<PAN-191352>
+    <category>Reboot</category>
+	<Bug_signature>
+Bug Signature of PAN-191352 :
+{	
+        Failure Pattern:
+        Unexpected reboot of PA-440 with High cpu of sadc
+
+        Check the  /var/log/pan/mp-monitor.log file in the TSF for below signature or logs 
+
+        Signature:
+        {
+		PID  USER PR NI VIRT  RES  SHR  S %CPU %MEM TIME+  COMMAND
+		3797 root 20 0  10584 2092 1868 R 82.8  0.0 1:10.24 sadc
+	}
+
+	Check the output for "cat /sys/class/net/kni0/duplex" linux command from the root prompt:
+	{
+		[root@PA-440 ~]# time cat /sys/class/net/kni0/duplex
+		cat: /sys/class/net/kni0/duplex: Invalid argument
+	}
+}
+	</Bug_signature>
+	<affect_version>10.2.1</affect_version>
+	<release_version>11.0.0, 10.2.4</release_version>
+</PAN-191352>
+
+///m-series
+<PAN-183603>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+Bug Signature of PAN-183603:
+{
+	Failure Pattern:
+	Raid log has below mount errors after upgrade
+	
+	Check the  /var/log/pan/raid.log file in the TSF for below signature or logs 
+	
+	Signature:
+	{
+		Jul 15 21:48:38 DEBUG: Mounting Disk Pair A (/dev/md1)
+		Jul 15 21:48:38 ERROR: mounting the Disk Pair A failed with ret mount: wrong fs type, 
+		bad option, bad superblock on /dev/md1,
+		missing codepage or helper program, or other error
+		In some cases useful info is found in syslog - try
+		dmesg | tail or so.
+		Jul 15 21:48:38 ERROR: Adding drive A1 failed
+		Jul 15 21:48:39 INFO: New Disk Pair A detected.
+		Jul 15 21:48:40 ERROR: mounting /dev/md1 failed with ret 32: mount: wrong fs type, bad option, 
+		bad superblock on /dev/md1,
+		missing codepage or helper program, or other error
+		In some cases useful info is found in syslog - try
+		dmesg | tail or so.
+	}
+}
+	</Bug_signature>
+	<affect_version>10.2.0</affect_version>
+	<release_version>10.2.0, 10.1.7</release_version>
+</PAN-183603>
+
+<PAN-186807>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+Bug Signature of PAN-186807:
+{
+	Failure Pattern:
+	Check raid logs after upgrade.
+	
+	Check the /tmp/cli/techsupport.txt in the TSF for below signature or logs 
+	
+	Signature:
+	{
+		CLI: show system raid detail (Execute after reboot)
+		DiskA:
+		Status clean, degraded, recovering
+		Disk A2:
+		status : spare rebuilding
+	}
+}
+	</Bug_signature>
+	<affect_version>10.1.3</affect_version>
+	<release_version>10.2.1, 10.1.7</release_version>
+</PAN-186807>
+
+///5400 mpc
+<PAN-192551>
+    <category>Path Monitor Failiure</category>
+	<Bug_signature>
+Bug Signature of PAN-192551:
+{
+	Failure Pattern:
+	DPC card restarts due to Path Monitor failure 
+	
+	Check the var/log/pan/path_monitor_hb_fail_s3_dp0.log in the TSF for below signature or logs  
+	
+	Signature:
+	{
+		Packet missing between Poll1 vs Poll2
+		Poll 1
+		flow_path_monitor_rx_from_mp 980489 27 info flow mgmt Path monitor packet received from MP
+		flow_path_monitor_tx_to_mp 980419 27 info flow mgmt Path monitor packet sent to MP
+		flow_path_monitor_tx_to_fe 439752 9 info flow mgmt Path monitor packet sent to FE
+		flow_path_monitor_rx_from_fe 439682 9 info flow mgmt Path monitor packet received from FE
+		Poll 2:
+		flow_path_monitor_rx_from_mp 980559 33 info flow mgmt Path monitor packet received from MP + 70
+		flow_path_monitor_tx_to_mp 980479 33 info flow mgmt Path monitor packet sent to MP + 60
+		flow_path_monitor_tx_to_fe 439782 11 info flow mgmt Path monitor packet sent to FE + 30
+		flow_path_monitor_rx_from_fe 439702 11 info flow mgmt Path monitor packet received from FE + 20
+
+		Log showed Core 1 is high load
+		CPU load (%) during last 60 seconds:
+		core 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+			* 5 4 4 4 3 4 3 3 3 4 4 4 3 3 3
+			* 6 5 4 4 4 4 4 4 4 4 4 4 4 4 4
+			* 9 7 6 6 6 6 6 6 6 6 6 6 6 6 6
+			* 12 9 8 8 8 8 8 8 8 8 8 8 8 8 8
+			* 13 10 9 9 9 9 9 9 9 9 8 8 9 9 9
+			* 11 9 8 8 7 8 8 8 8 8 8 8 8 8 8
+			* 9 7 6 6 6 6 6 6 6 6 6 6 6 6 6
+			* 10 7 6 6 7 7 7 7 7 6 7 7 7 7 6
+			* 12 9 8 8 8 8 8 8 8 8 8 8 8 8 8
+			* 24 9 8 8 8 8 8 8 8 8 8 8 8 8 8
+			* 70 9 8 9 9 9 9 9 8 9 9 9 8 9 9
+			* 100 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+			* 100 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+			* 100 9 9 9 9 9 9 9 9 9 9 9 9 9 9
+			* 100 13 12 12 12 13 12 13 12 13 12 12 12 12 13
+			* 100 10 10 10 10 11 10 11 10 11 10 10 11 10 10
+			* 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+			* 100 10 10 10 10 10 10 10 10 10 10 10 10 10 10
+			}
+		
+		{
+		2022-10-26 07:23:03 p1 session
+		2022-10-26 07:23:03 p1 session --------Bash commands on dp0--------
+		} ==> Terminate at Poll-1 of DP0
+	}
+}
+	</Bug_signature>
+	<affect_version>10.1.4</affect_version>
+	<release_version>10.2.3, 10.1.7, 10.1.6</release_version>
+</PAN-192551>
+
+<PAN-198332>
+    <category>Disk/Root partition usage</category>
+	<Bug_signature>
+Bug Signature of PAN-198332:
+{
+	Failure Pattern:
+	HA failover due to High root partition usage
+	
+	Check the /opt/var/s7/fpp/log/pan/bcm.log [MPC card] in the TSF for below signature or logs 
+	
+	Signature:
+	{
+		648:48:27:soc_port_sw_db_protocol_offset_get:1823Port 16 is invalid
+		648:48:27:soc_arad_mac_controlled_counter_get:56Invalid port
+		648:48:27:soc_port_sw_db_protocol_offset_get:1823Port 16 is invalid
+		648:48:27:soc_arad_mac_controlled_counter_get:56Invalid port
+		648:48:28:soc_port_sw_db_protocol_offset_get:1823Port 16 is invalid
+		648:48:28:soc_jer_ilkn_reg32_get:120Invalid port
+		648:48:28:pmOsILKN_port_link_get:1691Invalid port
+		648:48:28:portmod_port_link_get:2623Invalid port
+		648:48:28:soc_jer_portmod_port_link_state_get:4124Invalid
+	}
+}
+	</Bug_signature>
+	<affect_version>10.1.4</affect_version>
+	<release_version>11.0.0, 10.2.3, 10.1.7</release_version>
+</PAN-198332>
+
+<PAN-181860>
+    <category>Path Monitor Failiure</category>
+	<Bug_signature>
+Bug Signature of PAN-181860:
+{
+	Failure Pattern:
+	Path monitor failure triggered when one of the 100G port goes down in an AE group
+	
+	Check the  /var/log/pan/path_monitor_hb_fail_s1_.log in the TSF for below signature or logs 
+	
+	Signature:
+	{
+		Marvell stats:
+		Int details:
+			pkts512to1023_octets: 495
+			pkts1024tomax_octets: 25703
+			      bad_octets_rcv: 101024
+                         pkts128to255_octets: 1508
+                          pkts65to127_octets: 77342
+                            rcv_fifo_overrun: 1232 ==> Seeing fifo errors/fc_sent
+                               mac_rcv_error: 1232
+
+		Loop counters get stuck on poll 1 and 2.
+	}
+}
+	</Bug_signature>
+	<affect_version>10.1.2</affect_version>
+	<release_version>10.2.1, 10.1.6</release_version>
+</PAN-181860>
+
+///5400f specific
+<PAN-194152>
+    <category>Link Issue</category>
+	<Bug_signature>
+Bug Signature of PAN-194152:
+{
+	Failure Pattern:
+	CLI output shows wrong mapping information for ha ports
+	
+	Check the /tmp/cli/techsupport.txt in the TSF for below signature or logs
+	
+	Signature:
+	{
+		admin@NPI-36-117-PA-5440(active)> show interface ha1-a
+
+		--------------------------------------------------------------------------------
+		Name: ha1-a, ID: 5
+		Link status:
+		  Runtime link speed/duplex/state: *1000/full/up* ======> Should be 10000/full/up
+		  Configured link speed/duplex/state: auto/auto/auto
+		MAC address:
+		  Port MAC address 8c:36:7a:20:1c:49
+		Operation mode: ha
+		Untagged sub-interface support: no
+
+		admin@NPI-36-117-PA-5440(active)> show interface ha1-b
+
+		--------------------------------------------------------------------------------
+		Name: ha1-b, ID: 7
+		Link status:
+		  Runtime link speed/duplex/state: *10000/full/up* =======>should be 1000/full/up
+		  Configured link speed/duplex/state: auto/auto/auto
+		MAC address:
+		Port MAC address 8c:36:7a:20:1c:4a
+		Operation mode: ha
+		Untagged sub-interface support: no
+	}
+}
+	</Bug_signature>
+	<affect_version>11.0.0</affect_version>
+	<release_version>11.0.0, 10.2.3</release_version>
+</PAN-194152>
+
+///All
+<PAN-191845>
+    <category>Networking</category>
+	<Bug_signature>
+Bug Signature of PAN-191845:
+{
+	Failure Pattern:
+	Firewall uses the DNS server obtained via DHCP instead of the ones configured in Device 
+	or Services after the first DHCP renew.
+	
+	Check the /var/log/pan/dhcpd.log
+
+	Signature:
+	{
+		1. Configure static DNS server address on the FW and commit. (Firewall is cofigured with 8.8.8.8 and 8.8.4.4)
+		2. Enable tcpdump and ping any domain (ex. google.com). You can notice that DNS request goes to 8.8.8.8 and 8.8.4.4
+		3. Perform DHCP renew using below command
+		   > request dhcp client management-interface renew
+		4. Enabe tcpdump and ping any domain (ex. google.com). You can notice that DNS request goes to 10.193.4.10 and 
+		   10.193.4.11 (which is DHCP provided name servers)
+	}
+}
+	</Bug_signature>
+	<affect_version>10.2.0</affect_version>
+	<release_version>10.2.2, 10.1.9</release_version>
+</PAN-191845>
+
+
+</jira_id>
+
